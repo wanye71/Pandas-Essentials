@@ -1,12 +1,8 @@
 # Python pandas Essentials - Basic Plotting
 
-## Figsize()
+## Seaborn Basic Plotting
 ```python
-# Adjust the plot size to span 10 inches by 3 inches
-first_olympics.Sport.value_counts().plot(figsize=(10,3));
-```
+# How many medals have been won by men and women in the history of the Olypics. How many gold, silver and bronze medals were won for each gender?
 
-## Colormaps
-```python
-first_olympics.Sport.value_counts().plot(kind='pie', colormap='Pastel1')
+sns.countplot(x='Medal', data=odf, hue='Gender');
 ```
