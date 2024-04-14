@@ -1,34 +1,24 @@
 # Python pandas Essentials - Data Input and Validation
 
-## Using head and tail
+## Using info()
 ```python
-# Return the first 5 rows with head()
-olympic_df.head()
+olympic_df.info()
 
-    City	Edition	Sport	Discipline	Athlete	NOC	Gender	Event	Event_gender	Medal
-0	Athens	1896	Aquatics	Swimming	HAJOS, Alfred	HUN	Men	100m freestyle	M	Gold
-1	Athens	1896	Aquatics	Swimming	HERSCHMANN, Otto	AUT	Men	100m freestyle	M	Silver
-2	Athens	1896	Aquatics	Swimming	DRIVAS, Dimitrios	GRE	Men	100m freestyle for sailors	M	Bronze
-3	Athens	1896	Aquatics	Swimming	MALOKINIS, Ioannis	GRE	Men	100m freestyle for sailors	M	Gold
-4	Athens	1896	Aquatics	Swimming	CHASAPIS, Spiridon	GRE	Men	100m freestyle for sailors	M	Silver
-```
-
-```python
-# Get the last 5 rows with tail()
-olympic_df.tail()
-
-City	Edition	Sport	Discipline	Athlete	NOC	Gender	Event	Event_gender	Medal
-29211	Beijing	2008	Wrestling	Wrestling Gre-R	ENGLICH, Mirko	GER	Men	84 - 96kg	M	Silver
-29212	Beijing	2008	Wrestling	Wrestling Gre-R	MIZGAITIS, Mindaugas	LTU	Men	96 - 120kg	M	Bronze
-29213	Beijing	2008	Wrestling	Wrestling Gre-R	PATRIKEEV, Yuri	ARM	Men	96 - 120kg	M	Bronze
-29214	Beijing	2008	Wrestling	Wrestling Gre-R	LOPEZ, Mijain	CUB	Men	96 - 120kg	M	Gold
-29215	Beijing	2008	Wrestling	Wrestling Gre-R	BAROEV, Khasan	RUS	Men	96 - 120kg	M	Silver
-```
-
-```python
-# Display specific number of rows from the beginning
-olympic_df.head(3)
-
-# Display specific number of rows from the end
-olympic_df.tail(3)
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 29216 entries, 0 to 29215
+Data columns (total 10 columns):
+ #   Column        Non-Null Count  Dtype 
+---  ------        --------------  ----- 
+ 0   City          29216 non-null  object
+ 1   Edition       29216 non-null  int64 
+ 2   Sport         29216 non-null  object
+ 3   Discipline    29216 non-null  object
+ 4   Athlete       29216 non-null  object
+ 5   NOC           29216 non-null  object
+ 6   Gender        29216 non-null  object
+ 7   Event         29216 non-null  object
+ 8   Event_gender  29216 non-null  object
+ 9   Medal         29216 non-null  object
+dtypes: int64(1), object(9)
+memory usage: 2.2+ MB
 ```
