@@ -1,25 +1,59 @@
-# Python pandas Essentials - Indexing
+# Python pandas Essentials - Basic Analysis
 
-## String Handling
+## Exercise
 ```python
-# Find all records where the Athlete name 'Florence' is True
-olympic_df[olympic_df.Athlete.str.contains('Florence')]
+# In which events did Jesse Owens win a medal?
 
-| City                  | Edition | Sport     | Discipline      | Athlete                        | NOC | Gender | Event                     | Event_gender | Medal  |
-|-----------------------|---------|-----------|-----------------|--------------------------------|-----|--------|---------------------------|--------------|--------|
-| London                | 1908    | Skating   | Figure skating  | SYERS, Florence                | GBR | Women  | individual                | W            | Gold   |
-| London                | 1908    | Skating   | Figure skating  | SYERS, Florence                | GBR | Women  | pairs                     | X            | Bronze |
-| Paris                 | 1924    | Aquatics  | Swimming        | BARKER, Florence               | GBR | Women  | 4x100m freestyle relay   | W            | Silver |
-| Helsinki              | 1952    | Athletics | Athletics       | FOULDS-PAUL, June Florence    | GBR | Women  | 4x100m relay             | W            | Bronze |
-| Melbourne / Stockholm | 1956    | Athletics | Athletics       | FOULDS-PAUL, June Florence    | GBR | Women  | 4x100m relay             | W            | Silver |
-| Tokyo                 | 1964    | Athletics | Athletics       | AMOORE-POLLOCK, Judith Florence | AUS | Women  | 400m                      | W            | Bronze |
-| Los Angeles           | 1984    | Athletics | Athletics       | GRIFFITH-JOYNER, Florence      | USA | Women  | 200m                      | W            | Silver |
-| Seoul                 | 1988    | Athletics | Athletics       | GRIFFITH-JOYNER, Florence      | USA | Women  | 100m                      | W            | Gold   |
-| Seoul                 | 1988    | Athletics | Athletics       | GRIFFITH-JOYNER, Florence      | USA | Women  | 200m                      | W            | Gold   |
-| Seoul                 | 1988    | Athletics | Athletics       | GRIFFITH-JOYNER, Florence      | USA | Women  | 4x100m relay              | W            | Gold   |
-| Seoul                 | 1988    | Athletics | Athletics       | GRIFFITH-JOYNER, Florence      | USA | Women  | 4x400m relay              | W            | Silver |
+jo = olympics_df[olympics_df.Athlete =='OWENS, Jesse']
+jo
+
+| City   | Edition | Sport     | Discipline | Athlete     | NOC | Gender | Event         | Event_gender | Medal |
+|--------|---------|-----------|------------|-------------|-----|--------|---------------|--------------|-------|
+| Berlin | 1936    | Athletics | Athletics  | OWENS, Jesse| USA | Men    | 100m          | M            | Gold  |
+| Berlin | 1936    | Athletics | Athletics  | OWENS, Jesse| USA | Men    | 200m          | M            | Gold  |
+| Berlin | 1936    | Athletics | Athletics  | OWENS, Jesse| USA | Men    | 4x100m relay | M            | Gold  |
+| Berlin | 1936    | Athletics | Athletics  | OWENS, Jesse| USA | Men    | long jump     | M            | Gold  |
+
 ```
 
 ```python
+# Get the view_counts of Jesse Owens Events
+jo.Event.value_counts()
 
+Event
+100m            1
+200m            1
+4x100m relay    1
+long jump       1
+Name: count, dtype: int64
 ```
+
+```python
+# Which country has won the most men's gold medals in singles badminton over the years?Sort the results alphabetically by the player's name.
+
+medals = olympics_df[(olympics_df.Medal == 'Gold') & (olympics_df.Gender == 'Men') & (olympics_df.Sport == 'Badminton')]
+medals
+
+medals.sort_values(by='Athlete')
+```
+
+```python
+# Which three countries have won the most medals in the recent years (from 1984 to 2008)?
+
+rec = olympics_df[olympics_df.Edition >= 1984]
+rec
+
+rec.NOC.value_counts().head(3)
+```
+
+```python
+# Display the male gold medal winners for the 100m Track & Field sprint event over the years. List the results starting with the most recent. Show the Olympic City, Edition, Athlete and the country they represent.
+
+mgm100m = olympics_df[(olympics_df.Gender == 'Men') & (olympics_df.Medal == 'Gold') & (olympics_df.Event == '100m')]
+mgm100m.sort_values(['Edition'], ascending=False)
+
+# Select only the columns that are relevant
+mgm100m.sort_values(['Edition'], ascending=False)[['City', 'Edition', 'Athlete', 'NOC']]
+```
+
+
