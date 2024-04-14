@@ -1,43 +1,60 @@
-# Python pandas Essentials - Basic Analysins
+# Python pandas Essentials - Indexing
 
-## Using sort_values()
+## Boolean Indexing
 ```python
-olympic_df.Athlete.sort_values()
+# Check to see if a record in the dataset has a 'Gold' Medal
+# Results will return True or False
+olympic_df.Medal == 'Gold'
 
-651                 AABYE, Edgar
-2849       AALTONEN, Arvo Ossian
-2852       AALTONEN, Arvo Ossian
-7716    AALTONEN, Paavo Johannes
-7730    AALTONEN, Paavo Johannes
-                  ...           
-603                   ÖSTMO, Ole
-608                   ÖSTMO, Ole
-621                   ÖSTMO, Ole
-596                   ÖSTMO, Ole
-8051           ÖSTRAND, Per-Olof
-Name: Athlete, Length: 29216, dtype: object
+0         True
+1        False
+2        False
+3         True
+4        False
+         ...  
+29211    False
+29212    False
+29213    False
+29214     True
+29215    False
+Name: Medal, Length: 29216, dtype: bool
 ```
 
 ```python
-# Sort by multiple series
-olympic_df.sort_values(by=['Edition', 'Athlete'])
+# Return all records of Athletes that received a Gold Medal
+olympic_df[olympic_df.Medal == 'Gold']
 
-City	Edition	Sport	Discipline	Athlete	NOC	Gender	Event	Event_gender	Medal
-7	Athens	1896	Aquatics	Swimming	ANDREOU, Joannis	GRE	Men	1200m freestyle	M	Silver
-82	Athens	1896	Gymnastics	Artistic G.	ANDRIAKOPOULOS, Nicolaos	GRE	Men	rope climbing	M	Gold
-110	Athens	1896	Gymnastics	Artistic G.	ANDRIAKOPOULOS, Nicolaos	GRE	Men	team, parallel bars	M	Silver
-111	Athens	1896	Gymnastics	Artistic G.	ATHANASOPOULOS, Spyros	GRE	Men	team, parallel bars	M	Silver
-48	Athens	1896	Cycling	Cycling Road	BATTEL, Edward	GBR	Men	individual road race	M	Bronze
-...	...	...	...	...	...	...	...	...	...	...
-28095	Beijing	2008	Equestrian	Dressage	ZU-SAYN WITTGENSTEIN, Nathalie	DEN	Women	team	X	Bronze
-28819	Beijing	2008	Sailing	Sailing	ZUBARI, Shahar	ISR	Men	RS:X - Windsurfer	M	Bronze
-28977	Beijing	2008	Taekwondo	Taekwondo	ZUBCIC, Martina	CRO	Women	49 - 57 kg	W	Bronze
-28387	Beijing	2008	Gymnastics	Rhythmic G.	ZUEVA, Natalia	RUS	Women	group competition	W	Gold
-29007	Beijing	2008	Tennis	Tennis	ZVONAREVA, Vera	RUS	Women	singles	W	Bronze
-29216 rows × 10 columns
+| City   | Edition | Sport         | Discipline    | Athlete              | NOC | Gender | Event                      | Event_gender | Medal |
+|--------|---------|---------------|---------------|----------------------|-----|--------|----------------------------|--------------|-------|
+| Athens | 1896    | Aquatics      | Swimming      | HAJOS, Alfred        | HUN | Men    | 100m freestyle            | M            | Gold  |
+| Athens | 1896    | Aquatics      | Swimming      | MALOKINIS, Ioannis   | GRE | Men    | 100m freestyle for sailors| M            | Gold  |
+| Athens | 1896    | Aquatics      | Swimming      | HAJOS, Alfred        | HUN | Men    | 1200m freestyle           | M            | Gold  |
+| Athens | 1896    | Aquatics      | Swimming      | NEUMANN, Paul        | AUT | Men    | 400m freestyle            | M            | Gold  |
+| Athens | 1896    | Athletics     | Athletics     | BURKE, Thomas        | USA | Men    | 100m                       | M            | Gold  |
+| ...    | ...     | ...           | ...           | ...                  | ... | ...    | ...                        | ...          | ...   |
+| Beijing| 2008    | Wrestling     | Wrestling Gre-R | GUENOT, Steeve     | FRA | Men    | 60 - 66kg                  | M            | Gold  |
+| Beijing| 2008    | Wrestling     | Wrestling Gre-R | KVIRKELIA, Manuchar | GEO | Men    | 66 - 74kg                  | M            | Gold  |
+| Beijing| 2008    | Wrestling     | Wrestling Gre-R | MINGUZZI, Andrea    | ITA | Men    | 74 - 84kg                  | M            | Gold  |
+| Beijing| 2008    | Wrestling     | Wrestling Gre-R | KHUSHTOV, Aslanbek  | RUS | Men    | 84 - 96kg                  | M            | Gold  |
+| Beijing| 2008    | Wrestling     | Wrestling Gre-R | LOPEZ, Mijain       | CUB | Men    | 96 - 120kg                 | M            | Gold  |
+
 ```
+```python
+# Return all Women who received Gold Medals
+olympic_df[(olympic_df.Medal == 'Gold') & (olympic_df.Gender == 'Women')]
 
+| City   | Edition | Sport         | Discipline      | Athlete               | NOC | Gender | Event                                  | Event_gender | Medal |
+|--------|---------|---------------|-----------------|-----------------------|-----|--------|----------------------------------------|--------------|-------|
+| Paris  | 1900    | Golf          | Golf            | ABBOTT, Margaret Ives| USA | Women  | individual                             | W            | Gold  |
+| Paris  | 1900    | Tennis        | Tennis          | COOPER, Charlotte     | GBR | Women  | mixed doubles                          | X            | Gold  |
+| Paris  | 1900    | Tennis        | Tennis          | COOPER, Charlotte     | GBR | Women  | singles                                | W            | Gold  |
+| St Louis| 1904    | Archery       | Archery         | HOWELL, Matilda Scott | USA | Women  | double columbia round (50y - 40y - 30y)| W            | Gold  |
+| St Louis| 1904    | Archery       | Archery         | HOWELL, Matilda Scott | USA | Women  | double national round (60y - 50y)      | W            | Gold  |
+| ...    | ...     | ...           | ...             | ...                   | ... | ...    | ...                                    | ...          | ...   |
+| Beijing| 2008    | Weightlifting | Weightlifting   | CAO, Lei              | CHN | Women  | 75kg                                   | W            | Gold  |
+| Beijing| 2008    | Wrestling     | Wrestling Free. | HUYNH, Carol          | CAN | Women  | - 48kg                                 | W            | Gold  |
+| Beijing| 2008    | Wrestling     | Wrestling Free. | YOSHIDA, Saori        | JPN | Women  | 48 - 55kg                              | W            | Gold  |
+| Beijing| 2008    | Wrestling     | Wrestling Free. | ICHO, Kaori           | JPN | Women  | 55 - 63kg                              | W            | Gold  |
+| Beijing| 2008    | Wrestling     | Wrestling Free. | WANG, Jiao            | CHN | Women  | 63 - 72kg                              | W            | Gold  |
 
-
-
-
+```
