@@ -1,16 +1,12 @@
 # Python pandas Essentials - Basic Plotting
 
-## Basic plotting
+## Figsize()
 ```python
-# Line plot
-first_olympics.Sport.value_counts().plot(kind='line');
+# Adjust the plot size to span 10 inches by 3 inches
+first_olympics.Sport.value_counts().plot(figsize=(10,3));
+```
 
-# Bar plot
-first_olympics.Sport.value_counts().plot(kind='bar');
-
-# Horizontal Bar plot
-first_olympics.Sport.value_counts().plot(kind='barh');
-
-# Pie plot
-first_olympics.Sport.value_counts().plot(kind='pie');
+## Colormaps
+```python
+first_olympics.Sport.value_counts().plot(kind='pie', colormap='Pastel1')
 ```
