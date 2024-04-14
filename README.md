@@ -1,24 +1,60 @@
-# Python pandas Essentials - Data Input and Validation
+# Python pandas Essentials - Basic Analysins
 
-## Using info()
+## Using value_counts()
 ```python
-olympic_df.info()
+# Check to see how many medals were presented each time the Olympics were held
+olympic_df.Edition.value_counts()
 
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 29216 entries, 0 to 29215
-Data columns (total 10 columns):
- #   Column        Non-Null Count  Dtype 
----  ------        --------------  ----- 
- 0   City          29216 non-null  object
- 1   Edition       29216 non-null  int64 
- 2   Sport         29216 non-null  object
- 3   Discipline    29216 non-null  object
- 4   Athlete       29216 non-null  object
- 5   NOC           29216 non-null  object
- 6   Gender        29216 non-null  object
- 7   Event         29216 non-null  object
- 8   Event_gender  29216 non-null  object
- 9   Medal         29216 non-null  object
-dtypes: int64(1), object(9)
-memory usage: 2.2+ MB
+2008    2042
+2000    2015
+2004    1998
+1996    1859
+1992    1705
+1988    1546
+1984    1459
+1980    1387
+1976    1305
+1920    1298
+1972    1185
+1968    1031
+1964    1010
+1952     889
+1912     885
+1956     885
+1924     884
+1960     882
+1936     875
+1948     814
+1908     804
+1928     710
+1932     615
+1900     512
+1904     470
+1896     151
+Name: count, dtype: int64
 ```
+
+```python
+# Get how many medals were givin to Men and Women
+olympic_df.Gender.value_counts()
+
+Gender
+Men      21721
+Women     7495
+Name: count, dtype: int64
+```
+
+```python
+# Sort the returned data as assencding
+olympic_df.Gender.value_counts(ascending=True)
+
+Gender
+Women     7495
+Men      21721
+Name: count, dtype: int64
+```
+
+
+
+
+
