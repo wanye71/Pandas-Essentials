@@ -1,57 +1,40 @@
 # Python pandas Essentials - Basic Analysins
 
-## Using value_counts()
+## Using sort_values()
 ```python
-# Check to see how many medals were presented each time the Olympics were held
-olympic_df.Edition.value_counts()
+olympic_df.Athlete.sort_values()
 
-2008    2042
-2000    2015
-2004    1998
-1996    1859
-1992    1705
-1988    1546
-1984    1459
-1980    1387
-1976    1305
-1920    1298
-1972    1185
-1968    1031
-1964    1010
-1952     889
-1912     885
-1956     885
-1924     884
-1960     882
-1936     875
-1948     814
-1908     804
-1928     710
-1932     615
-1900     512
-1904     470
-1896     151
-Name: count, dtype: int64
+651                 AABYE, Edgar
+2849       AALTONEN, Arvo Ossian
+2852       AALTONEN, Arvo Ossian
+7716    AALTONEN, Paavo Johannes
+7730    AALTONEN, Paavo Johannes
+                  ...           
+603                   ÖSTMO, Ole
+608                   ÖSTMO, Ole
+621                   ÖSTMO, Ole
+596                   ÖSTMO, Ole
+8051           ÖSTRAND, Per-Olof
+Name: Athlete, Length: 29216, dtype: object
 ```
 
 ```python
-# Get how many medals were givin to Men and Women
-olympic_df.Gender.value_counts()
+# Sort by multiple series
+olympic_df.sort_values(by=['Edition', 'Athlete'])
 
-Gender
-Men      21721
-Women     7495
-Name: count, dtype: int64
-```
-
-```python
-# Sort the returned data as assencding
-olympic_df.Gender.value_counts(ascending=True)
-
-Gender
-Women     7495
-Men      21721
-Name: count, dtype: int64
+City	Edition	Sport	Discipline	Athlete	NOC	Gender	Event	Event_gender	Medal
+7	Athens	1896	Aquatics	Swimming	ANDREOU, Joannis	GRE	Men	1200m freestyle	M	Silver
+82	Athens	1896	Gymnastics	Artistic G.	ANDRIAKOPOULOS, Nicolaos	GRE	Men	rope climbing	M	Gold
+110	Athens	1896	Gymnastics	Artistic G.	ANDRIAKOPOULOS, Nicolaos	GRE	Men	team, parallel bars	M	Silver
+111	Athens	1896	Gymnastics	Artistic G.	ATHANASOPOULOS, Spyros	GRE	Men	team, parallel bars	M	Silver
+48	Athens	1896	Cycling	Cycling Road	BATTEL, Edward	GBR	Men	individual road race	M	Bronze
+...	...	...	...	...	...	...	...	...	...	...
+28095	Beijing	2008	Equestrian	Dressage	ZU-SAYN WITTGENSTEIN, Nathalie	DEN	Women	team	X	Bronze
+28819	Beijing	2008	Sailing	Sailing	ZUBARI, Shahar	ISR	Men	RS:X - Windsurfer	M	Bronze
+28977	Beijing	2008	Taekwondo	Taekwondo	ZUBCIC, Martina	CRO	Women	49 - 57 kg	W	Bronze
+28387	Beijing	2008	Gymnastics	Rhythmic G.	ZUEVA, Natalia	RUS	Women	group competition	W	Gold
+29007	Beijing	2008	Tennis	Tennis	ZVONAREVA, Vera	RUS	Women	singles	W	Bronze
+29216 rows × 10 columns
 ```
 
 
