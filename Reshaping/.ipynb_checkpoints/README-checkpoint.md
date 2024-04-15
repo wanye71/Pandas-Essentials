@@ -1,6 +1,6 @@
 # Pandas Essentials - Reshaping
 
-## Reshaping Exercise
+## Reshaping Exercise 
 ```python
 import pandas as pd
 
