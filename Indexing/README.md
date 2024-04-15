@@ -1,14 +1,14 @@
 # Python pandas Essentials - Indexing
 
-## set_index()
+## Using loc[]
 ```python
-# Set the new index to a variable 'athlete'
-athlete = odf.set_index('Athlete')
-athlete.head()
+odf.loc['BOLT, Usain']
+
+KeyError: 'BOLT, Usain'
 ```
 
 ```python
-# Reset to original index
-athlete.reset_index(inplace=True)
-athlete.head()
+# No error
+odf.set_index('Athlete', inplace=True)
+odf.loc['BOLT, Usain']
 ```
