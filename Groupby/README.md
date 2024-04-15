@@ -1,8 +1,8 @@
 # Pandas Essentials - Groupby
 
-## Groupby Computation
+## Groupby Exercise
 ```python
-# Get the count of medals for the Edition group
+# Groupby 'Edition' and get the size object to determine the medals count for each group
 olympics_df.groupby('Edition').size()
 
 # output
@@ -34,53 +34,50 @@ Edition
 2004    1998
 2008    2042
 dtype: int64
+
+
+# Now plot it!
+olympics_df.groupby('Edition').size().plot()
 ```
 
 ```python
-# Group by edition, the country represented, and the medals
-olympics_df.groupby(['Edition', 'NOC', 'Medal']).agg(['count'])
+# Groupby 'NOC'  and let's use the basic aggregate function first. 
+# So, we need the count and note that because 
+# it's asking for the first and the most recent medal win,
+# what we want to use is the min and the max information that is
+olympics_df.groupby('NOC').agg(['count', 'min', 'max'])
+
 # output
-City	Sport	Discipline	Athlete	Gender	Event	Event_gender
-Edition	NOC	Medal							
-1896	AUS	Gold	2	2	2	2	2	2	2
-AUT	Bronze	2	2	2	2	2	2	2
-Gold	2	2	2	2	2	2	2
-Silver	1	1	1	1	1	1	1
-DEN	Bronze	3	3	3	3	3	3	3
-...	...	...	...	...	...	...	...	...	...
-2008	UZB	Silver	2	2	2	2	2	2	2
-VEN	Bronze	1	1	1	1	1	1	1
-VIE	Silver	1	1	1	1	1	1	1
-ZIM	Gold	1	1	1	1	1	1	1
-Silver	3	3	3	3	3	3	3
-2356 rows × 7 column
+| City | Edition | Sport | Discipline | Gender | Event | Event_gender | Medal |
+|------|---------|-------|------------|--------|-------|--------------|-------|
+| AFG  | Beijing | Beijing | Taekwondo | Men    | - 58 kg | M | Bronze |
+| AHO  | Seoul | Seoul | Sailing | Men    | board (division II) | M | Silver |
+| ALG  | Atlanta | Sydney | Athletics | Women    | high jump | W | Silver |
+| ANZ  | London | Stockholm | Aquatics | Women    | singles indoor | W | Silver |
+| ARG  | Amsterdam | Tokyo | Aquatics | Women    | volleyball | X | Silver |
+| ...  | ... | ... | ... | ...    | ... | ... | ... |
+| VIE  | Beijing | Sydney | Taekwondo | Women    | 49 - 57 kg | W | Silver |
+| YUG  | Amsterdam | Tokyo | Aquatics | Women    | water polo | W | Silver |
+| ZAM  | Atlanta | Los Angeles | Athletics | Men    | 400m hurdles | M | Silver |
+| ZIM  | Athens | Moscow | Aquatics | Women    | hockey | W | Silver |
+| ZZX  | Athens | St Louis | Athletics | Women    | tug of war | X | Silver |
 
 
-olympics_df.groupby(['Edition', 'NOC', 'Medal']).agg({'Edition' :['min', 'max', 'count']})
+# Using agg dict
+olympics_df.groupby('NOC').agg({'Edition' :['count', 'min', 'max']})
 # output
-Edition
-min	max	count
-Edition	NOC	Medal			
-1896	AUS	Gold	1896	1896	2
-AUT	Bronze	1896	1896	2
-Gold	1896	1896	2
-Silver	1896	1896	1
-DEN	Bronze	1896	1896	3
-...	...	...	...	...	...
-2008	UZB	Silver	2008	2008	2
-VEN	Bronze	2008	2008	1
-VIE	Silver	2008	2008	1
-ZIM	Gold	2008	2008	1
-Silver	2008	2008	3
-2356 rows × 3 columns
+| Edition | count | min | max |
+|---------|-------|-----|-----|
+| AFG     | 1     | 2008| 2008|
+| AHO     | 1     | 1988| 1988|
+| ALG     | 14    | 1984| 2008|
+| ANZ     | 29    | 1908| 1912|
+| ARG     | 239   | 1924| 2008|
+| ...     | ...   | ... | ... |
+| VIE     | 2     | 2000| 2008|
+| YUG     | 435   | 1924| 2000|
+| ZAM     | 2     | 1984| 1996|
+| ZIM     | 23    | 1980| 2008|
+| ZZX     | 48    | 1896| 1904|
 
-
-# Find Carl Lewis and then groupby Athlete
-olympics_df[olympics_df.Athlete == 'LEWIS, Carl'].groupby(['Medal', 'Athlete']).agg({'Edition' :['min', 'max', 'count']})
-# output
-Edition
-min	max	count
-Medal	Athlete			
-Gold	LEWIS, Carl	1984	1996	9
-Silver	LEWIS, Carl	1988	1988	1
 ```
