@@ -1,101 +1,86 @@
 # Pandas Essentials - Groupby
 
-## Iterating through groups
+## Groupby Computation
 ```python
-# Loop through group by object
-for group_key, group_value in olympics_df.groupby('Edition'):
-    print(group_key)
-    print(group_value)
+# Get the count of medals for the Edition group
+olympics_df.groupby('Edition').size()
 
 # output
-1896
-       City  Edition          Sport       Discipline  \
-0    Athens     1896       Aquatics         Swimming   
-1    Athens     1896       Aquatics         Swimming   
-2    Athens     1896       Aquatics         Swimming   
-3    Athens     1896       Aquatics         Swimming   
-4    Athens     1896       Aquatics         Swimming   
-..      ...      ...            ...              ...   
-146  Athens     1896  Weightlifting    Weightlifting   
-147  Athens     1896  Weightlifting    Weightlifting   
-148  Athens     1896      Wrestling  Wrestling Gre-R   
-149  Athens     1896      Wrestling  Wrestling Gre-R   
-150  Athens     1896      Wrestling  Wrestling Gre-R   
-
-                      Athlete  NOC Gender                        Event  \
-0               HAJOS, Alfred  HUN    Men               100m freestyle   
-1            HERSCHMANN, Otto  AUT    Men               100m freestyle   
-2           DRIVAS, Dimitrios  GRE    Men   100m freestyle for sailors   
-3          MALOKINIS, Ioannis  GRE    Men   100m freestyle for sailors   
-4          CHASAPIS, Spiridon  GRE    Men   100m freestyle for sailors   
-..                        ...  ...    ...                          ...   
-146             JENSEN, Viggo  DEN    Men  heavyweight - two hand lift   
-147       ELLIOTT, Launceston  GBR    Men  heavyweight - two hand lift   
-148  CHRISTOPOULOS, Stephanos  GRE    Men                   open event   
-149            SCHUMANN, Carl  GER    Men                   open event   
-150          TSITAS, Georgios  GRE    Men                   open event   
-
-    Event_gender   Medal  
-0              M    Gold  
-1              M  Silver  
-2              M  Bronze  
-3              M    Gold  
-4              M  Silver  
-..           ...     ...  
-146            M    Gold  
-147            M  Silver  
-148            M  Bronze  
-149            M    Gold  
-150            M  Silver  
-
-[151 rows x 10 columns]
-1900
-      City  Edition       Sport  Discipline  \
-151  Paris     1900    Aquatics    Swimming   
-152  Paris     1900    Aquatics    Swimming   
-153  Paris     1900    Aquatics    Swimming   
-154  Paris     1900    Aquatics    Swimming   
-155  Paris     1900    Aquatics    Swimming   
-..     ...      ...         ...         ...   
-658  Paris     1900  Tug of War  Tug of War   
-659  Paris     1900  Tug of War  Tug of War   
-660  Paris     1900  Tug of War  Tug of War   
-661  Paris     1900  Tug of War  Tug of War   
-662  Paris     1900  Tug of War  Tug of War   
-
-                               Athlete  NOC Gender            Event  \
-151                     HALMAY, Zoltan  HUN    Men  1500m freestyle   
-152                JARVIS, John Arthur  GBR    Men  1500m freestyle   
-153                        WAHLE, Otto  AUT    Men  1500m freestyle   
-154                    DROST, Johannes  NED    Men  200m backstroke   
-155                  HOPPENBERG, Ernst  GER    Men  200m backstroke   
-..                                 ...  ...    ...              ...   
-658                       COLLAS, Jean  FRA    Men       tug of war   
-659                  GONDOUIN, Charles  FRA    Men       tug of war   
-660  HENRIQUEZ DE ZUBIERRA, Constantin  FRA    Men       tug of war   
-661                      ROFFO, Joseph  FRA    Men       tug of war   
-662                     SARRADE, Emile  FRA    Men       tug of war   
-
-    Event_gender   Medal  
-151            M  Bronze  
-152            M    Gold  
-153            M  Silver  
-154            M  Bronze  
-155            M    Gold  
-..           ...     ...  
-658            M  Silver  
-659            M  Silver  
-660            M  Silver  
-661            M  Silver  
-662            M  Silver  
-
-[512 rows x 10 columns]
+Edition
+1896     151
+1900     512
+1904     470
+1908     804
+1912     885
+1920    1298
+1924     884
+1928     710
+1932     615
+1936     875
+1948     814
+1952     889
+1956     885
+1960     882
+1964    1010
+1968    1031
+1972    1185
+1976    1305
+1980    1387
+1984    1459
+1988    1546
+1992    1705
+1996    1859
+2000    2015
+2004    1998
+2008    2042
+dtype: int64
 ```
 
 ```python
-# Get the type for the group_value
-type(group_value)
-
+# Group by edition, the country represented, and the medals
+olympics_df.groupby(['Edition', 'NOC', 'Medal']).agg(['count'])
 # output
-pandas.core.frame.DataFrame
+City	Sport	Discipline	Athlete	Gender	Event	Event_gender
+Edition	NOC	Medal							
+1896	AUS	Gold	2	2	2	2	2	2	2
+AUT	Bronze	2	2	2	2	2	2	2
+Gold	2	2	2	2	2	2	2
+Silver	1	1	1	1	1	1	1
+DEN	Bronze	3	3	3	3	3	3	3
+...	...	...	...	...	...	...	...	...	...
+2008	UZB	Silver	2	2	2	2	2	2	2
+VEN	Bronze	1	1	1	1	1	1	1
+VIE	Silver	1	1	1	1	1	1	1
+ZIM	Gold	1	1	1	1	1	1	1
+Silver	3	3	3	3	3	3	3
+2356 rows × 7 column
+
+
+olympics_df.groupby(['Edition', 'NOC', 'Medal']).agg({'Edition' :['min', 'max', 'count']})
+# output
+Edition
+min	max	count
+Edition	NOC	Medal			
+1896	AUS	Gold	1896	1896	2
+AUT	Bronze	1896	1896	2
+Gold	1896	1896	2
+Silver	1896	1896	1
+DEN	Bronze	1896	1896	3
+...	...	...	...	...	...
+2008	UZB	Silver	2008	2008	2
+VEN	Bronze	2008	2008	1
+VIE	Silver	2008	2008	1
+ZIM	Gold	2008	2008	1
+Silver	2008	2008	3
+2356 rows × 3 columns
+
+
+# Find Carl Lewis and then groupby Athlete
+olympics_df[olympics_df.Athlete == 'LEWIS, Carl'].groupby(['Medal', 'Athlete']).agg({'Edition' :['min', 'max', 'count']})
+# output
+Edition
+min	max	count
+Medal	Athlete			
+Gold	LEWIS, Carl	1984	1996	9
+Silver	LEWIS, Carl	1988	1988	1
 ```
