@@ -1,6 +1,6 @@
 # Pandas Essentials - Reshaping
 
-## Using stack()
+## Using unstack()
 ```python
 import pandas as pd
 
@@ -19,3 +19,7 @@ group_df
 
 # stack()
 group_df.stack('Event')
+
+# unstack()
+group_df.unstack()
+group_df.unstack('Gender')
